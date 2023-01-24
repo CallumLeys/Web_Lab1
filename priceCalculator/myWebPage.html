@@ -44,6 +44,14 @@
       background-color: #45a049;
     }
 
+    select{
+      padding: 12px 20px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+    }
+
     /* Style the final price label */
     #finalPrice {
       font-size: 24px;
@@ -87,9 +95,22 @@
 
 <div class="wrapper">
   <form id="budget" action="javascript:calculatePrice()">
+    <label for="job-options">Select a job option:</label><br>
+    <select id="job-options" onchange="updateSalary()">
+      <option value="0">Please select a job option</option>
+      <option value="54000">Software Developer</option>
+      <option value="90000">Data Scientist</option>
+      <option value="90000">DevOps Engineer</option>
+      <option value="100000">Cloud Engineer</option>
+      <option value="100000">Machine Learning Engineer</option>
+      <option value="100000">Cybersecurity Engineer</option>
+      <option value="50000">System Administrator</option>
+      <option value="60000">Project Manager</option>
+      <option value="50000">Database Administrator</option>
+    </select><br><br>
     <label for="salary">What annual salary seems suitable for you?</label>
     <input type="text" id="salary" name="salary"/><br><br>
-    <label for="days">How many days do you think it will take you to make the website?</label>
+    <label for="days">How many days do you think it will take you to make the website?</label><br>
     <input type="text" id="days" name="days"/><br><br>
     <input type="submit" value="Calculate your price!"><br><br>
     <label id="finalPrice"> ??? </label>
