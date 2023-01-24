@@ -9,3 +9,7 @@ app.use(express.static('public'));
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+
+app.use(function(req, res, next) {
+  res.status(404).send("Sorry, we couldn't find that page!");
+});
