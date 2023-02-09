@@ -1,5 +1,8 @@
 //https://stackoverflow.com/questions/5823722/how-to-serve-an-image-using-nodejs
 
+const { MongoClient } = require("mongodb");
+const uri = "mongodb://testUser:user@127.0.0.1:27017/mydb";
+
 var path = require('path');
 var express = require('express');
 var app = express();
@@ -30,6 +33,31 @@ app.get('/api/getPrice', function(req, res){
     var roundToNearest = 50;
     roundedPrice = Math.round((price+roundToNearest)/roundToNearest) * roundToNearest // Always round up
     res.send(""+roundedPrice)
+
+
+    // Database stuff
+    // Create a new MongoClient
+    const client = new MongoClient(uri);
+    async function run() {
+        try {
+            //Write databse Insert/Update/Query code here..
+            var dbo = client.db("mydb");
+            var myobj = { quoteName: roundedPrice, salary: s, days: d }; //******CHECK!!!****
+            await dbo.collection("quotes").insertOne(myobj, function(err, res) {
+                if (err) {
+                    console.log(err); 
+                    throw err;
+                }
+                console.log("1 quote inserted");
+            }); 
+            console.log('End the database stuff');
+
+        } finally {
+            // Ensures that the client will close when you finish/error
+            await client.close();
+        }
+    }
+    run().catch(console.dir);
 });
 
 app.use(express.static(dir, options));
@@ -42,3 +70,4 @@ app.use(function ( req, res, next) {
 app.listen(8000, function () {
     console.log('Listening on http://localhost:8000/');
 });
+
